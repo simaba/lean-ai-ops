@@ -1,0 +1,23 @@
+{
+  "project_name": "Audit Preparation Improvement",
+  "problem_statement": "Audit preparation is late, reactive, and requires repeated rework across teams.",
+  "current_symptoms": [
+    "Repeated last-minute requests",
+    "High rework on submitted materials",
+    "Unclear ownership across handoffs"
+  ],
+  "current_metrics": {
+    "on_time_completion_rate": "62%",
+    "rework_rate": "28%",
+    "average_cycle_time_days": "14"
+  },
+  "constraints": [
+    "Limited team capacity",
+    "Fixed audit deadlines"
+  ],
+  "stakeholder_concerns": [
+    "Need clearer accountability",
+    "Need fewer escalation loops",
+    "Need more predictable delivery"
+  ]
+}
