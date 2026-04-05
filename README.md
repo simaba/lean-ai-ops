@@ -1,268 +1,140 @@
 # LSS Copilot — LLM-powered Lean Six Sigma
 
-An AI copilot that turns messy project descriptions into rigorous, evidence-tagged Lean Six Sigma improvement packages — and a full Black Belt analytics workbench with statistical tools for data-driven analysis.
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat&logo=python&logoColor=white)](https://python.org)
+[![Streamlit](https://img.shields.io/badge/Streamlit-app-FF4B4B?style=flat&logo=streamlit&logoColor=white)](https://streamlit.io)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/simaba/LLM-powered-Lean-Six-Sigma)](https://github.com/simaba/LLM-powered-Lean-Six-Sigma/commits/main)
+
+An AI copilot that turns informal project descriptions into rigorous, evidence-tagged Lean Six Sigma improvement packages — with a full Black Belt analytics workbench for quantitative analysis.
 
 ---
 
 ## What you get
 
 ### 📋 Project Wizard (5-step guided workflow)
-Describe your project → receive a complete structured improvement package:
+
+Describe your project in plain language → receive a complete structured improvement package:
 
 | Output | What it is |
-|---|---|
+|--------|-----------|
 | **Cleaned problem statement** | Rewritten to be specific, measurable, and scoped |
 | **CTQs** | Critical-to-Quality characteristics tied to customer requirements |
 | **SIPOC** | Suppliers → Inputs → Process → Outputs → Customers map |
-| **Full DMAIC structure** | Define / Measure / Analyze / Improve / Control — all five phases |
-| **Root cause analysis** | 5 Whys chain, fishbone structure (mode-dependent) |
+| **Full DMAIC structure** | All five phases: Define / Measure / Analyze / Improve / Control |
+| **Root cause analysis** | 5 Whys chain and fishbone structure |
 | **Suggested metrics** | What to measure and how |
-| **Improvement actions** | Prioritised, specific actions with effort/impact context |
+| **Improvement actions** | Prioritised, with effort and impact context |
 | **Control plan** | Owners, review cadence, escalation triggers |
-| **Action tracker** | Tabled by priority |
-| **Role-aware summary** | Framed for your audience (Engineer, PM, Manager, Quality Lead, Executive) |
+| **Role-aware summary** | Framed for Engineer, PM, Manager, Quality Lead, or Executive |
 
-Every output item is tagged with one of three evidence labels so you always know what's fact, what's inference, and what's missing.
+Every output is tagged with an evidence label so you always know what's fact, what's inference, and what's missing:
+
+- ✓ **Directly supported by input** — grounded in what you provided
+- ~ **Inferred hypothesis** — logical inference pending validation
+- ! **Missing evidence** — data gaps requiring investigation
 
 ### ⚡ Black Belt Analytics Workbench (9 tools)
-Upload your data and run quantitative analysis directly in the app:
 
 | Tool | What it does |
-|---|---|
+|------|-------------|
 | **Process Capability** | Cp, Cpk, Pp, Ppk, sigma level, DPMO, capability histogram |
-| **MSA / Gauge R&R** | Repeatability, reproducibility, %GRR, NDC (ANOVA method, AIAG MSA-4) |
+| **MSA / Gauge R&R** | Repeatability, reproducibility, %GRR, NDC (ANOVA / AIAG MSA-4) |
 | **Hypothesis Testing** | One-sample t, two-sample t, paired t, proportion tests, chi-square, ANOVA |
-| **SPC Charts** | I-MR, Xbar-R, p-chart — Nelson rules, out-of-control detection |
-| **FMEA** | RPN builder, risk matrix, Pareto — fully interactive |
-| **Regression** | Simple and multiple OLS with diagnostics (VIF, Breusch-Pagan, Durbin-Watson) |
+| **SPC Charts** | I-MR, Xbar-R, p-chart with Nelson rules and out-of-control detection |
+| **FMEA** | Interactive RPN builder, risk matrix, Pareto chart |
+| **Regression** | OLS with diagnostics (VIF, Breusch-Pagan, Durbin-Watson) |
 | **DOE** | Factor definition, design recommendation (full factorial / fractional / Plackett-Burman) |
 | **Benefits & COPQ** | ROI, payback period, 3-year NPV, waterfall and timeline charts |
 
----
+### 📤 Export formats
 
-## How to install
-
-### Step 1 — Make sure Python is installed
-
-Open a terminal (Windows: press **Win + R**, type `cmd`, press Enter) and run:
-
-```
-python --version
-```
-
-You need Python **3.10 or later**. If you see an error, download Python from [python.org](https://www.python.org/downloads/) and install it. Tick **"Add Python to PATH"** during installation.
+PDF · Word (.docx) · Excel (.xlsx, 6-sheet workbench) · HTML · Markdown
 
 ---
 
-### Step 2 — Download the project
+## Quick start
 
-If you have Git:
-```
+### Prerequisites
+
+- Python 3.10+
+- A Claude API key from [console.anthropic.com](https://console.anthropic.com) *(optional — structured fallback mode runs without it)*
+
+### Install and run
+
+```bash
 git clone https://github.com/simaba/LLM-powered-Lean-Six-Sigma.git
 cd LLM-powered-Lean-Six-Sigma
-```
-
-Or download the ZIP from GitHub → click **Code → Download ZIP** → extract it → open a terminal in that folder.
-
----
-
-### Step 3 — Install dependencies
-
-In the terminal, run:
-```
 pip install -r requirements.txt
-```
-
-This installs Streamlit, the Anthropic SDK, all statistical libraries (NumPy, SciPy, statsmodels), and the export libraries (fpdf2, python-docx, openpyxl).
-
-> **If `pip` is not found:** try `pip3 install -r requirements.txt` or `python -m pip install -r requirements.txt`
-
----
-
-### Step 4 — Add your API key (optional but recommended)
-
-Without an API key the app runs in **structured fallback mode** — it still produces high-quality, evidence-tagged outputs based on your inputs, but without LLM reasoning.
-
-With a Claude API key you get **fully AI-powered, project-specific analysis**.
-
-**Windows:**
-```
-set ANTHROPIC_API_KEY=your_key_here
-```
-
-**Mac / Linux:**
-```
-export ANTHROPIC_API_KEY=your_key_here
-```
-
-Get a key at [console.anthropic.com](https://console.anthropic.com).
-
----
-
-### Step 5 — Launch the app
-
-```
 streamlit run app.py
 ```
 
-The app will open automatically in your browser at `http://localhost:8501`.
+The app opens in your browser at `http://localhost:8501`.
 
----
+To run without a UI:
+```bash
+python run_demo.py
+```
 
-## First project in 5 minutes
-
-1. **Open the app** — you land on the Project Intake screen.
-2. **Click "Load sample project"** to pre-fill a working example.
-3. **Click "Next: Configure"** and choose a methodology mode (start with **DMAIC**) and audience (start with **PM**).
-4. **Click "Next: Generate"** then **"▶ Run Assessment"**. The analysis takes 5–15 seconds.
-5. **Explore the Dashboard** — six tabs: Overview, DMAIC, Root Cause, Improvements, Control Plan, Summary.
-6. **Click "Export"** and download a PDF, Word, Excel, or HTML file.
-
----
-
-## Using the Analytics Workbench
-
-Click **⚡ Analytics** in the sidebar (replaces the wizard).
-
-- Start in the **📂 Data Hub** tab — upload a CSV or Excel file.
-- Switch to any analytics tab (Capability, SPC, etc.) — the uploaded data is available across all tabs.
-- You can also **paste numbers directly** in any tab without uploading a file.
-- The **FMEA** and **Benefits/COPQ** tools build tables interactively — no data file needed.
-
----
-
-## Methodology modes
-
-| Mode | When to use |
-|---|---|
-| **DMAIC** | Structured improvement projects with a clear before/after goal |
-| **Kaizen** | Quick wins, rapid improvement cycles, small-scope issues |
-| **Root Cause** | When the cause is unclear — produces 5 Whys chain + fishbone |
-| **Process Waste** | Flow and efficiency problems — TIMWOODS waste taxonomy |
-| **Control Plan** | Sustaining gains — control items with owners and triggers |
-
----
-
-## Audience modes
-
-| Audience | What changes |
-|---|---|
-| **Engineer** | Process detail, measurement systems, technical bottlenecks |
-| **Project Manager** | Actions, owners, milestones, risk tracking |
-| **Manager** | Team accountability, top priorities, 30-day action list |
-| **Quality Lead** | CTQ alignment, measurement integrity, control plan rigor |
-| **Executive** | Business impact, plain language, decision-ready — no jargon |
-
----
-
-## Evidence discipline
-
-Every output item carries one of three tags:
-
-| Tag | Meaning |
-|---|---|
-| ✓ **directly_supported_by_input** | Statement is grounded in the data you provided |
-| ~ **inferred_hypothesis** | Logical inference — plausible but not yet proven |
-| ! **missing_evidence** | Important data is absent — this needs investigation |
-
-This ensures the system never presents assumptions as facts. The evidence quality chart in the Dashboard shows the breakdown across all outputs.
-
----
-
-## Export formats
-
-| Format | Best for |
-|---|---|
-| **PDF** | Printing, emailing leadership, formal submissions |
-| **Word (.docx)** | Editing, customising, adding to existing documents |
-| **Excel (.xlsx)** | 6-sheet workbook — data tables, action tracking |
-| **HTML** | Browser viewing, sharing via link, embedding in portals |
-| **Markdown** | Notion, Confluence, GitHub, any text editor |
-
----
-
-## CLI usage
-
-For automated or batch runs:
+### Set your API key (optional)
 
 ```bash
-python run_demo.py --input examples/sample_project.json --mode dmaic --audience pm
+export ANTHROPIC_API_KEY=your_key_here
 ```
+
+Without a key the app runs in structured fallback mode — you get the full framework and analytics, without LLM-generated content.
+
+---
+
+## Methodology options
+
+**Five DMAIC approaches:** DMAIC · Kaizen · Root Cause Analysis · Process Waste (TIMWOODS) · Control Planning
+
+**Five audience framings:** Engineer · Project Manager · Manager · Quality Lead · Executive
 
 ---
 
 ## Repository structure
 
 ```
-app.py                          ← Flagship Streamlit application (wizard + workbench)
-run_demo.py                     ← CLI entry point
-requirements.txt
-
+app.py                  # Streamlit UI entry point
+run_demo.py             # CLI entry point
 src/
-  models.py                     ← ProjectInput, EvidenceItem, AssessmentResult dataclasses
-  engine.py                     ← Assessment orchestrator
-  phases/
-    __init__.py                 ← LLM-powered phase logic with structured fallback
-  renderers.py                  ← Markdown and HTML export renderers
-  exporters.py                  ← PDF, Word, and Excel export
-
-ui/
-  forms.py                      ← Project input form components
-  render.py                     ← Tab rendering components
-  dashboard_insights.py         ← Chart builders and executive signals
-  analytics_workbench.py        ← Black Belt Analytics Workbench (9 tools)
-
-analytics/
-  capability.py                 ← Cp / Cpk / Pp / Ppk / sigma / DPMO
-  msa.py                        ← Gauge R&R (ANOVA method, AIAG MSA-4)
-  hypothesis_tests.py           ← 7 statistical tests with plain-English output
-  spc.py                        ← I-MR, Xbar-R, p-chart with Nelson rules
-  fmea.py                       ← FMEA builder, RPN, risk matrix, Pareto
-  regression.py                 ← Simple and multiple OLS with diagnostics
-  doe.py                        ← DOE design assistant (factorial / fractional / PB)
-  benefits.py                   ← COPQ, ROI, payback, 3-year NPV
-
-storage/
-  projects.py                   ← Save and load project snapshots (JSON)
-
-examples/
-  sample_project.json
-  sample_output.md
-
-templates/
-  project_input_template.json
+  models.py             # Data models
+  engine.py             # LLM orchestration
+  phases/               # DMAIC phase handlers
+analytics/              # Workbench tools (capability, MSA, SPC, FMEA, ...)
+storage/                # Project persistence
+examples/               # Sample projects
+templates/              # Input templates
 ```
-
----
-
-## Troubleshooting
-
-**"ModuleNotFoundError"**
-→ Run `pip install -r requirements.txt` again. If a specific module fails, install it directly: `pip install <module-name>`
-
-**"streamlit: command not found"**
-→ Try `python -m streamlit run app.py`
-
-**PDF download produces garbled characters**
-→ The PDF exporter auto-converts special characters to ASCII. If you see issues, switch to Word or HTML export.
-
-**App loads but "Claude AI connected" doesn't appear**
-→ Your API key may not be set in this terminal session. Set it and restart the app.
-
-**API key is set but results seem generic**
-→ Make sure the key is valid and your account has API credits. The app falls back to structured mode automatically if the API call fails.
-
-**On Windows: `set` command doesn't persist between sessions**
-→ Set the key permanently: System Properties → Environment Variables → New → `ANTHROPIC_API_KEY`
 
 ---
 
 ## Design principles
 
-- **Evidence discipline** — every output is tagged supported / inferred / missing
-- **Structured outputs** over free-form advice
-- **Role-aware summaries** for different audiences
-- **Mode-specific reasoning** (DMAIC, Kaizen, Root Cause, Waste, Control)
-- **Black Belt analytics** — full quantitative toolkit embedded alongside the wizard
-- **Graceful degradation** — fully functional without an API key
-- **One canonical backend** — one engine, one phase logic source, one flagship app
+- **Evidence discipline** — every LLM output is tagged supported / inferred / missing
+- **Graceful degradation** — full functionality without API key
+- **Role-aware outputs** — same analysis, five different framings
+- **Integrated quantitative analysis** — not just text generation
+
+---
+
+## Related repositories
+
+This repository is part of a connected toolkit for responsible AI operations:
+
+| Repository | Purpose |
+|-----------|---------|
+| [Enterprise AI Governance Playbook](https://github.com/simaba/enterprise-ai-governance-playbook) | End-to-end AI operating model from intake to improvement |
+| [AI Release Governance Framework](https://github.com/simaba/ai-release-governance-framework) | Risk-based release gates for AI systems |
+| [AI Release Readiness Checklist](https://github.com/simaba/ai-release-readiness-checklist) | Risk-tiered pre-release checklists with CLI tool |
+| [AI Accountability Design Patterns](https://github.com/simaba/ai-accountability-design-patterns) | Patterns for human oversight and escalation |
+| [Multi-Agent Governance Framework](https://github.com/simaba/multi-agent-governance-framework) | Roles, authority, and escalation for agent systems |
+| [Multi-Agent Orchestration Patterns](https://github.com/simaba/multi-agent-orchestration-patterns) | Sequential, parallel, and feedback-loop patterns |
+| [AI Agent Evaluation Framework](https://github.com/simaba/ai-agent-evaluation-framework) | System-level evaluation across 5 dimensions |
+| [Agent System Simulator](https://github.com/simaba/agent-system-simulator) | Runnable multi-agent simulator with governance controls |
+| [LLM-powered Lean Six Sigma](https://github.com/simaba/LLM-powered-Lean-Six-Sigma) | AI copilot for structured process improvement |
+
+---
+
+*Shared in a personal capacity. Open to collaborations and feedback — connect on [LinkedIn](https://linkedin.com/in/simaba) or [Medium](https://medium.com/@bagheri.sima).*
