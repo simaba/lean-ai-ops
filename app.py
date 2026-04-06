@@ -598,7 +598,7 @@ def _render_example_library() -> None:
 
             c1, c2 = st.columns([3, 2])
             with c1:
-                st.markdown(f"**Problem statement:**")
+                st.markdown("**Problem statement:**")
                 st.info(proj["problem_statement"])
                 st.markdown(f"**Recommended tools:** {', '.join(proj.get('typical_tools', []))}")
             with c2:
@@ -622,7 +622,7 @@ def _render_example_library() -> None:
                 for m in proj["common_mistakes"]:
                     st.markdown(f"- {m}")
 
-            if st.button(f"Load this example →", key=f"load_ex_{proj['id']}", type="primary"):
+            if st.button("Load this example →", key=f"load_ex_{proj['id']}", type="primary"):
                 st.session_state.project_data = {
                     "project_name":         proj["project_name"],
                     "problem_statement":    proj["problem_statement"],
@@ -807,7 +807,7 @@ def _step_generate() -> None:
     st.markdown("### Confirmation")
     c1, c2, c3 = st.columns(3)
     with c1:
-        st.markdown(f"**Project**")
+        st.markdown("**Project**")
         st.markdown(f"_{data.get('project_name','—')}_")
         st.markdown(f"**Mode:** {mode_label}")
         st.markdown(f"**Audience:** {aud_label}")
@@ -982,7 +982,6 @@ def _step_dashboard() -> None:
         with col_phases:
             for phase, items in result.dmaic_structure.items():
                 phase_col  = _PHASE_COLORS.get(phase, "#4361EE")
-                phase_css  = _PHASE_CSS.get(phase, "")
                 with st.expander(f"**{phase.upper()}**", expanded=True):
                     st.markdown(
                         f'<div style="height:3px;background:{phase_col};border-radius:2px;margin-bottom:10px"></div>',
@@ -1067,7 +1066,7 @@ def _step_dashboard() -> None:
         import pandas as pd
         tracker_df = pd.DataFrame(result.action_tracker) if result.action_tracker else pd.DataFrame()
         if not tracker_df.empty:
-            edited_tracker = st.data_editor(
+            st.data_editor(
                 tracker_df,
                 use_container_width=True,
                 hide_index=True,
@@ -1100,7 +1099,7 @@ def _step_dashboard() -> None:
         st.markdown("#### Control Plan Summary Table")
         try:
             cp_df = control_plan_table(result)
-            edited_cp = st.data_editor(
+            st.data_editor(
                 cp_df,
                 use_container_width=True,
                 hide_index=True,

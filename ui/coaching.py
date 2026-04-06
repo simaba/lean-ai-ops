@@ -149,7 +149,7 @@ def render_input_coaching(field_name: str) -> None:
             )
         with col_strong:
             st.markdown(
-                f'<p style="font-weight:600;color:#065F46;margin-bottom:4px;">✓ Strong example</p>'
+                '<p style="font-weight:600;color:#065F46;margin-bottom:4px;">✓ Strong example</p>'
                 + _pill(data["strong"], bg="#D1FAE5", color="#065F46"),
                 unsafe_allow_html=True,
             )

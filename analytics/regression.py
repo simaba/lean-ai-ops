@@ -21,8 +21,8 @@ Usage
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Tuple
+from dataclasses import dataclass
+from typing import Dict, List, Tuple
 
 import altair as alt
 import numpy as np
@@ -243,7 +243,7 @@ def simple_regression(
     std_resid = residuals / (rse * np.sqrt(1 - leverage + 1e-12))
     n_outliers = int(np.sum(np.abs(std_resid) > 3))
     outlier_check = (
-        f"No extreme outliers (|standardised residual| > 3)."
+        "No extreme outliers (|standardised residual| > 3)."
         if n_outliers == 0
         else f"{n_outliers} observation(s) with |standardised residual| > 3 detected. Investigate."
     )

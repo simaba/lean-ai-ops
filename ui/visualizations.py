@@ -4,7 +4,6 @@ from typing import Any
 
 import altair as alt
 import pandas as pd
-from src.models import ProjectInput
 
 
 def plot_control_chart(metrics: dict[str, float]) -> alt.Chart:

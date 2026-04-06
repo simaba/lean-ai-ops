@@ -37,30 +37,28 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if _PROJECT_ROOT not in sys.path:
     sys.path.insert(0, _PROJECT_ROOT)
 
-from analytics.capability import run_capability, CapabilityResult
+from analytics.capability import run_capability
 from analytics.hypothesis_tests import (
     one_sample_t,
     two_sample_t,
     chi_square_independence,
-    HypothesisResult,
 )
 from analytics.spc import imr_chart, xbar_r_chart, p_chart, SPCResult
 from analytics.msa import run_gauge_rr, MSAResult
-from analytics.fmea import new_entry, fmea_pareto_chart, FMEAEntry
+from analytics.fmea import new_entry, fmea_pareto_chart
 from analytics.benefits import (
     run_benefits_analysis,
     CostOfQualityEntry,
-    BenefitsResult,
 )
 from analytics.regression import (
     simple_regression,
     multiple_regression,
-    RegressionResult,
 )
-from analytics.doe import recommend_design, DOEFactor, DOEDesign
+from analytics.doe import recommend_design, DOEFactor
 
 try:
-    import altair as alt
+    import importlib
+    importlib.import_module("altair")
     _HAS_ALTAIR = True
 except ImportError:
     _HAS_ALTAIR = False

@@ -28,9 +28,8 @@ Usage
 from __future__ import annotations
 
 import itertools
-import math
 import random
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional, Union
 
 import altair as alt
@@ -241,9 +240,6 @@ def _build_fraction(factors: List[DOEFactor], p: int) -> pd.DataFrame:
     # Generators are keyed by (k, p) in STANDARD_GENERATORS
     gen_strings = STANDARD_GENERATORS.get((k, p), [])
 
-    # Parse generator strings like "E = ABC" to map columns
-    name_to_idx = {f.name: i for i, f in enumerate(base_factors)}
-
     for fi, added_f in enumerate(added_factors):
         gen_str = gen_strings[fi] if fi < len(gen_strings) else None
         if gen_str:
@@ -322,8 +318,6 @@ def _compute_alias_structure(factors: List[DOEFactor], p: int) -> list[str]:
     Return human-readable aliasing relationships for a 2^(k-p) design.
     """
     k = len(factors)
-    names = [f.name for f in factors]
-    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     alias_list: list[str] = []
 
     if p == 0:
@@ -815,8 +809,6 @@ def decode_run_matrix(
     pd.DataFrame with actual (decoded) factor levels.
     """
     matrix = design.randomized_run_matrix if use_randomized else design.run_matrix
-    factor_map = {f.name: f for f in factors}
-
     decoded = matrix.copy()
     for f in factors:
         if f.name not in decoded.columns:

@@ -1,0 +1,378 @@
+diff --git a/.github/workflows/ci.yml b/.github/workflows/ci.yml
+index 921e7d6..2a92580 100644
+--- a/.github/workflows/ci.yml
++++ b/.github/workflows/ci.yml
+@@ -21,7 +21,7 @@ jobs:
+       - name: Install dependencies
+         run: |
+           pip install --upgrade pip
+-          pip install flake8
++          pip install flake8 pytest
+           pip install -r requirements.txt
+ 
+       - name: Lint with flake8
+@@ -31,3 +31,6 @@ jobs:
+ 
+       - name: Check key imports resolve
+         run: python -c "import src.models; import src.engine; print('Imports OK')"
++
++      - name: Run tests
++        run: pytest tests/ -v --tb=short
+diff --git a/analytics/benefits.py b/analytics/benefits.py
+index bb57b13..5e847f8 100644
+--- a/analytics/benefits.py
++++ b/analytics/benefits.py
+@@ -38,12 +38,10 @@ Usage
+ 
+ from __future__ import annotations
+ 
+-import math
+ from dataclasses import dataclass
+-from typing import List, Optional
++from typing import List
+ 
+ import altair as alt
+-import numpy as np
+ import pandas as pd
+ 
+ 
+diff --git a/analytics/capability.py b/analytics/capability.py
+index c4bc950..152111d 100644
+--- a/analytics/capability.py
++++ b/analytics/capability.py
+@@ -9,8 +9,7 @@ Produces an Altair histogram with specification limit overlays.
+ 
+ from __future__ import annotations
+ 
+-import math
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import Optional
+ 
+ import altair as alt
+diff --git a/analytics/doe.py b/analytics/doe.py
+index 7a1d097..288f009 100644
+--- a/analytics/doe.py
++++ b/analytics/doe.py
+@@ -28,9 +28,8 @@ Usage
+ from __future__ import annotations
+ 
+ import itertools
+-import math
+ import random
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import List, Optional, Union
+ 
+ import altair as alt
+@@ -241,9 +240,6 @@ def _build_fraction(factors: List[DOEFactor], p: int) -> pd.DataFrame:
+     # Generators are keyed by (k, p) in STANDARD_GENERATORS
+     gen_strings = STANDARD_GENERATORS.get((k, p), [])
+ 
+-    # Parse generator strings like "E = ABC" to map columns
+-    name_to_idx = {f.name: i for i, f in enumerate(base_factors)}
+-
+     for fi, added_f in enumerate(added_factors):
+         gen_str = gen_strings[fi] if fi < len(gen_strings) else None
+         if gen_str:
+@@ -322,8 +318,6 @@ def _compute_alias_structure(factors: List[DOEFactor], p: int) -> list[str]:
+     Return human-readable aliasing relationships for a 2^(k-p) design.
+     """
+     k = len(factors)
+-    names = [f.name for f in factors]
+-    letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+     alias_list: list[str] = []
+ 
+     if p == 0:
+@@ -815,8 +809,6 @@ def decode_run_matrix(
+     pd.DataFrame with actual (decoded) factor levels.
+     """
+     matrix = design.randomized_run_matrix if use_randomized else design.run_matrix
+-    factor_map = {f.name: f for f in factors}
+-
+     decoded = matrix.copy()
+     for f in factors:
+         if f.name not in decoded.columns:
+diff --git a/analytics/fmea.py b/analytics/fmea.py
+index f82813c..9429bbb 100644
+--- a/analytics/fmea.py
++++ b/analytics/fmea.py
+@@ -29,7 +29,7 @@ Usage
+ from __future__ import annotations
+ 
+ import uuid
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import List, Optional
+ 
+ import altair as alt
+diff --git a/analytics/hypothesis_tests.py b/analytics/hypothesis_tests.py
+index 46f0c6c..7b3840b 100644
+--- a/analytics/hypothesis_tests.py
++++ b/analytics/hypothesis_tests.py
+@@ -12,7 +12,7 @@ plain-English interpretation, assumption notes, and an optional Altair chart.
+ from __future__ import annotations
+ 
+ import math
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import Optional
+ 
+ import altair as alt
+diff --git a/analytics/lean_flow.py b/analytics/lean_flow.py
+index a08aa2e..73ca882 100644
+--- a/analytics/lean_flow.py
++++ b/analytics/lean_flow.py
+@@ -49,7 +49,7 @@ Usage
+ 
+ from __future__ import annotations
+ 
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import List
+ 
+ import altair as alt
+diff --git a/analytics/msa.py b/analytics/msa.py
+index b5c2c06..19b2e63 100644
+--- a/analytics/msa.py
++++ b/analytics/msa.py
+@@ -20,9 +20,7 @@ from dataclasses import dataclass
+ from typing import Optional
+ 
+ import altair as alt
+-import numpy as np
+ import pandas as pd
+-from scipy import stats
+ 
+ 
+ # ---------------------------------------------------------------------------
+@@ -117,8 +115,6 @@ def run_gauge_rr(
+         )
+     r = int(rep_counts[0])  # number of replications per cell
+ 
+-    N = p * o * r  # total observations
+-
+     # ------------------------------------------------------------------
+     # ANOVA sum-of-squares decomposition
+     # ------------------------------------------------------------------
+@@ -150,9 +146,6 @@ def run_gauge_rr(
+         for _, row in df.iterrows()
+     )
+ 
+-    # SS_Total (for reference)
+-    ss_total = sum((row["y"] - grand_mean) ** 2 for _, row in df.iterrows())
+-
+     # ------------------------------------------------------------------
+     # Degrees of freedom
+     # ------------------------------------------------------------------
+diff --git a/analytics/regression.py b/analytics/regression.py
+index 46da860..bc8933e 100644
+--- a/analytics/regression.py
++++ b/analytics/regression.py
+@@ -21,8 +21,8 @@ Usage
+ from __future__ import annotations
+ 
+ import math
+-from dataclasses import dataclass, field
+-from typing import Dict, List, Optional, Tuple
++from dataclasses import dataclass
++from typing import Dict, List, Tuple
+ 
+ import altair as alt
+ import numpy as np
+@@ -243,7 +243,7 @@ def simple_regression(
+     std_resid = residuals / (rse * np.sqrt(1 - leverage + 1e-12))
+     n_outliers = int(np.sum(np.abs(std_resid) > 3))
+     outlier_check = (
+-        f"No extreme outliers (|standardised residual| > 3)."
++        "No extreme outliers (|standardised residual| > 3)."
+         if n_outliers == 0
+         else f"{n_outliers} observation(s) with |standardised residual| > 3 detected. Investigate."
+     )
+diff --git a/analytics/spc.py b/analytics/spc.py
+index 3e48905..6e4e661 100644
+--- a/analytics/spc.py
++++ b/analytics/spc.py
+@@ -11,7 +11,7 @@ layered Altair chart ready for display in Streamlit or Jupyter.
+ from __future__ import annotations
+ 
+ import math
+-from dataclasses import dataclass, field
++from dataclasses import dataclass
+ from typing import Optional
+ 
+ import altair as alt
+@@ -348,7 +348,7 @@ def _build_imr_chart(
+         "CL": [x_bar] * n,
+         "OOC": ["OOC" if i in ooc_idx else "In Control" for i in range(n)],
+         "Status": [
+-            f"ABOVE UCL" if v > ucl_i else ("BELOW LCL" if v < lcl_i else "OK")
++            "ABOVE UCL" if v > ucl_i else ("BELOW LCL" if v < lcl_i else "OK")
+             for v in individuals
+         ],
+     })
+@@ -818,9 +818,7 @@ def p_chart(
+                 f"(sample size = {sample_sizes[i]}, defectives = {defectives[i]})."
+             )
+ 
+-    # Run-rule checks on proportions (use average limits for rule 2/3)
+-    avg_ucl = float(np.mean(ucl_list))
+-    avg_lcl = float(np.mean(lcl_list))
++    # Run-rule checks on proportions
+     r2_idx = _rule2_run(proportions, p_bar)
+     for idx in r2_idx:
+         if idx not in ooc_idx:
+diff --git a/app.py b/app.py
+index 2244b2e..85645f7 100644
+--- a/app.py
++++ b/app.py
+@@ -598,7 +598,7 @@ def _render_example_library() -> None:
+ 
+             c1, c2 = st.columns([3, 2])
+             with c1:
+-                st.markdown(f"**Problem statement:**")
++                st.markdown("**Problem statement:**")
+                 st.info(proj["problem_statement"])
+                 st.markdown(f"**Recommended tools:** {', '.join(proj.get('typical_tools', []))}")
+             with c2:
+@@ -622,7 +622,7 @@ def _render_example_library() -> None:
+                 for m in proj["common_mistakes"]:
+                     st.markdown(f"- {m}")
+ 
+-            if st.button(f"Load this example →", key=f"load_ex_{proj['id']}", type="primary"):
++            if st.button("Load this example →", key=f"load_ex_{proj['id']}", type="primary"):
+                 st.session_state.project_data = {
+                     "project_name":         proj["project_name"],
+                     "problem_statement":    proj["problem_statement"],
+@@ -807,7 +807,7 @@ def _step_generate() -> None:
+     st.markdown("### Confirmation")
+     c1, c2, c3 = st.columns(3)
+     with c1:
+-        st.markdown(f"**Project**")
++        st.markdown("**Project**")
+         st.markdown(f"_{data.get('project_name','—')}_")
+         st.markdown(f"**Mode:** {mode_label}")
+         st.markdown(f"**Audience:** {aud_label}")
+@@ -982,7 +982,6 @@ def _step_dashboard() -> None:
+         with col_phases:
+             for phase, items in result.dmaic_structure.items():
+                 phase_col  = _PHASE_COLORS.get(phase, "#4361EE")
+-                phase_css  = _PHASE_CSS.get(phase, "")
+                 with st.expander(f"**{phase.upper()}**", expanded=True):
+                     st.markdown(
+                         f'<div style="height:3px;background:{phase_col};border-radius:2px;margin-bottom:10px"></div>',
+@@ -1067,7 +1066,7 @@ def _step_dashboard() -> None:
+         import pandas as pd
+         tracker_df = pd.DataFrame(result.action_tracker) if result.action_tracker else pd.DataFrame()
+         if not tracker_df.empty:
+-            edited_tracker = st.data_editor(
++            st.data_editor(
+                 tracker_df,
+                 use_container_width=True,
+                 hide_index=True,
+@@ -1100,7 +1099,7 @@ def _step_dashboard() -> None:
+         st.markdown("#### Control Plan Summary Table")
+         try:
+             cp_df = control_plan_table(result)
+-            edited_cp = st.data_editor(
++            st.data_editor(
+                 cp_df,
+                 use_container_width=True,
+                 hide_index=True,
+diff --git a/src/exporters.py b/src/exporters.py
+index b9bd954..f817925 100644
+--- a/src/exporters.py
++++ b/src/exporters.py
+@@ -210,9 +210,6 @@ def render_docx_summary(result: AssessmentResult) -> bytes:
+     """
+     from docx import Document
+     from docx.shared import Pt, RGBColor, Inches
+-    from docx.enum.text import WD_ALIGN_PARAGRAPH
+-    from docx.oxml.ns import qn
+-    from docx.oxml import OxmlElement
+ 
+     doc = Document()
+ 
+@@ -366,7 +363,7 @@ def render_xlsx_summary(result: AssessmentResult) -> bytes:
+     """
+     import openpyxl
+     from openpyxl.styles import (
+-        Font, PatternFill, Alignment, Border, Side, numbers
++        Font, PatternFill, Alignment, Border, Side
+     )
+ 
+     wb = openpyxl.Workbook()
+@@ -374,8 +371,6 @@ def render_xlsx_summary(result: AssessmentResult) -> bytes:
+ 
+     # ── Style helpers ──
+     _BLUE_FILL = PatternFill("solid", fgColor="4361EE")
+-    _LIGHT_FILL = PatternFill("solid", fgColor="EEF2FF")
+-    _NAVY_FILL = PatternFill("solid", fgColor="1E1B4B")
+     _GREEN_FILL = PatternFill("solid", fgColor="C6EFCE")
+     _YELLOW_FILL = PatternFill("solid", fgColor="FFEB9C")
+     _RED_FILL = PatternFill("solid", fgColor="FFC7CE")
+diff --git a/tests/test_analytics.py b/tests/test_analytics.py
+index 39d296d..2c1ce59 100644
+--- a/tests/test_analytics.py
++++ b/tests/test_analytics.py
+@@ -37,30 +37,28 @@ _PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+ if _PROJECT_ROOT not in sys.path:
+     sys.path.insert(0, _PROJECT_ROOT)
+ 
+-from analytics.capability import run_capability, CapabilityResult
++from analytics.capability import run_capability
+ from analytics.hypothesis_tests import (
+     one_sample_t,
+     two_sample_t,
+     chi_square_independence,
+-    HypothesisResult,
+ )
+ from analytics.spc import imr_chart, xbar_r_chart, p_chart, SPCResult
+ from analytics.msa import run_gauge_rr, MSAResult
+-from analytics.fmea import new_entry, fmea_pareto_chart, FMEAEntry
++from analytics.fmea import new_entry, fmea_pareto_chart
+ from analytics.benefits import (
+     run_benefits_analysis,
+     CostOfQualityEntry,
+-    BenefitsResult,
+ )
+ from analytics.regression import (
+     simple_regression,
+     multiple_regression,
+-    RegressionResult,
+ )
+-from analytics.doe import recommend_design, DOEFactor, DOEDesign
++from analytics.doe import recommend_design, DOEFactor
+ 
+ try:
+-    import altair as alt
++    import importlib
++    importlib.import_module("altair")
+     _HAS_ALTAIR = True
+ except ImportError:
+     _HAS_ALTAIR = False
+diff --git a/ui/coaching.py b/ui/coaching.py
+index ef08f7d..2dee3ea 100644
+--- a/ui/coaching.py
++++ b/ui/coaching.py
+@@ -149,7 +149,7 @@ def render_input_coaching(field_name: str) -> None:
+             )
+         with col_strong:
+             st.markdown(
+-                f'<p style="font-weight:600;color:#065F46;margin-bottom:4px;">✓ Strong example</p>'
++                '<p style="font-weight:600;color:#065F46;margin-bottom:4px;">✓ Strong example</p>'
+                 + _pill(data["strong"], bg="#D1FAE5", color="#065F46"),
+                 unsafe_allow_html=True,
+             )
+diff --git a/ui/visualizations.py b/ui/visualizations.py
+index 29af439..23c4422 100644
+--- a/ui/visualizations.py
++++ b/ui/visualizations.py
+@@ -4,7 +4,6 @@ from typing import Any
+ 
+ import altair as alt
+ import pandas as pd
+-from src.models import ProjectInput
+ 
+ 
+ def plot_control_chart(metrics: dict[str, float]) -> alt.Chart:

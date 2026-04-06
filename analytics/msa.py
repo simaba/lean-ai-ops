@@ -20,9 +20,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 import altair as alt
-import numpy as np
 import pandas as pd
-from scipy import stats
 
 
 # ---------------------------------------------------------------------------
@@ -117,8 +115,6 @@ def run_gauge_rr(
         )
     r = int(rep_counts[0])  # number of replications per cell
 
-    N = p * o * r  # total observations
-
     # ------------------------------------------------------------------
     # ANOVA sum-of-squares decomposition
     # ------------------------------------------------------------------
@@ -149,9 +145,6 @@ def run_gauge_rr(
         (row["y"] - cell_means.loc[(row["part"], row["operator"])]) ** 2
         for _, row in df.iterrows()
     )
-
-    # SS_Total (for reference)
-    ss_total = sum((row["y"] - grand_mean) ** 2 for _, row in df.iterrows())
 
     # ------------------------------------------------------------------
     # Degrees of freedom

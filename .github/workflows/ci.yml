@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade pip
-          pip install flake8
+          pip install flake8 pytest
           pip install -r requirements.txt
 
       - name: Lint with flake8
@@ -31,3 +31,6 @@ jobs:
 
       - name: Check key imports resolve
         run: python -c "import src.models; import src.engine; print('Imports OK')"
+
+      - name: Run tests
+        run: pytest tests/ -v --tb=short

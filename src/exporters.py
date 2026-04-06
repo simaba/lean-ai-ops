@@ -210,9 +210,6 @@ def render_docx_summary(result: AssessmentResult) -> bytes:
     """
     from docx import Document
     from docx.shared import Pt, RGBColor, Inches
-    from docx.enum.text import WD_ALIGN_PARAGRAPH
-    from docx.oxml.ns import qn
-    from docx.oxml import OxmlElement
 
     doc = Document()
 
@@ -366,7 +363,7 @@ def render_xlsx_summary(result: AssessmentResult) -> bytes:
     """
     import openpyxl
     from openpyxl.styles import (
-        Font, PatternFill, Alignment, Border, Side, numbers
+        Font, PatternFill, Alignment, Border, Side
     )
 
     wb = openpyxl.Workbook()
@@ -374,8 +371,6 @@ def render_xlsx_summary(result: AssessmentResult) -> bytes:
 
     # ── Style helpers ──
     _BLUE_FILL = PatternFill("solid", fgColor="4361EE")
-    _LIGHT_FILL = PatternFill("solid", fgColor="EEF2FF")
-    _NAVY_FILL = PatternFill("solid", fgColor="1E1B4B")
     _GREEN_FILL = PatternFill("solid", fgColor="C6EFCE")
     _YELLOW_FILL = PatternFill("solid", fgColor="FFEB9C")
     _RED_FILL = PatternFill("solid", fgColor="FFC7CE")

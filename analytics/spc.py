@@ -11,7 +11,7 @@ layered Altair chart ready for display in Streamlit or Jupyter.
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Optional
 
 import altair as alt
@@ -348,7 +348,7 @@ def _build_imr_chart(
         "CL": [x_bar] * n,
         "OOC": ["OOC" if i in ooc_idx else "In Control" for i in range(n)],
         "Status": [
-            f"ABOVE UCL" if v > ucl_i else ("BELOW LCL" if v < lcl_i else "OK")
+            "ABOVE UCL" if v > ucl_i else ("BELOW LCL" if v < lcl_i else "OK")
             for v in individuals
         ],
     })
@@ -818,9 +818,7 @@ def p_chart(
                 f"(sample size = {sample_sizes[i]}, defectives = {defectives[i]})."
             )
 
-    # Run-rule checks on proportions (use average limits for rule 2/3)
-    avg_ucl = float(np.mean(ucl_list))
-    avg_lcl = float(np.mean(lcl_list))
+    # Run-rule checks on proportions
     r2_idx = _rule2_run(proportions, p_bar)
     for idx in r2_idx:
         if idx not in ooc_idx:
