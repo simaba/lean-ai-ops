@@ -63,7 +63,7 @@ PDF · Word (.docx) · Excel (.xlsx, 6-sheet workbench) · HTML · Markdown
 
 ```bash
 git clone https://github.com/simaba/lean-ai-ops.git
-cd LLM-powered-Lean-Six-Sigma
+cd lean-ai-ops
 pip install -r requirements.txt
 py -m streamlit run app.py
 ```
