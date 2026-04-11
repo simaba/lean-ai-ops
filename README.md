@@ -64,24 +64,33 @@ PDF · Word (.docx) · Excel (.xlsx, 6-sheet workbench) · HTML · Markdown
 ```bash
 git clone https://github.com/simaba/lean-ai-ops.git
 cd lean-ai-ops
-pip install -r requirements.txt
-py -m streamlit run app.py
+python -m pip install -r requirements.txt
+python -m streamlit run app.py
 ```
+
+**Windows:** `py -m streamlit run app.py` also works.
 
 The app opens in your browser at `http://localhost:8501`.
 
 To run without a UI:
+
 ```bash
 python run_demo.py
 ```
 
 ### Set your API key (optional)
 
+**macOS / Linux**
 ```bash
 export ANTHROPIC_API_KEY=your_key_here
 ```
 
-Without a key the app runs in structured fallback mode — you get the full framework and analytics, without LLM-generated content.
+**Windows PowerShell**
+```powershell
+$env:ANTHROPIC_API_KEY="your_key_here"
+```
+
+Without a key the app runs in structured fallback mode. You still get the full framework and analytics, without LLM-generated content.
 
 ---
 
@@ -95,7 +104,7 @@ Without a key the app runs in structured fallback mode — you get the full fram
 
 ## Repository structure
 
-```
+```text
 app.py                  # Streamlit UI entry point
 run_demo.py             # CLI entry point
 src/
