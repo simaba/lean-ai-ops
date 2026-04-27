@@ -1,0 +1,23 @@
+{
+  "project_name": "Supplier Change Request Intake",
+  "problem_statement": "Change requests are taking too long to move from intake to decision, causing repeated stakeholder escalation and missed downstream planning dates.",
+  "current_symptoms": [
+    "Cycle time varies widely from request to request",
+    "Teams repeatedly ask for status because ownership is unclear",
+    "Rework occurs when requests reach review without the right information"
+  ],
+  "current_metrics": {
+    "average_cycle_time_days": "18",
+    "requests_requiring_rework_percent": "27%",
+    "escalations_per_month": "6"
+  },
+  "constraints": [
+    "No additional headcount is available this quarter",
+    "Supplier and internal approval timelines must both be respected"
+  ],
+  "stakeholder_concerns": [
+    "Program managers need predictable decision timing",
+    "Engineering wants cleaner intake quality before review",
+    "Leadership wants fewer escalations and clearer accountability"
+  ]
+}
