@@ -83,11 +83,13 @@ python -m streamlit run app.py
 
 ### Run the CLI demo
 
-The CLI demo expects a JSON input file:
+The repository includes a sample input file at `templates/sample_project.json`.
 
 ```bash
 python run_demo.py --input templates/sample_project.json --mode dmaic --audience pm
 ```
+
+This path is also exercised in CI using the deterministic fallback flow, so the documented demo path stays valid even when no API key is set.
 
 ## Methodology options
 
@@ -106,8 +108,9 @@ src/
 analytics/              # Workbench tools
 storage/                # Project persistence
 ui/                     # UI components
+templates/              # Input templates including sample_project.json
 examples/               # Example projects and outputs
-templates/              # Input templates
+tests/                  # Smoke tests for documented fallback path
 ```
 
 ## Design principles
@@ -116,6 +119,16 @@ templates/              # Input templates
 - **graceful degradation** so the app still works without an API key
 - **role-aware framing** so the same work can be expressed for different audiences
 - **quantitative plus narrative** so the repo is useful for actual improvement work
+
+## Current quality guardrails
+
+The repository currently has:
+
+- CI checks for imports and tests
+- smoke coverage for the documented CLI fallback path
+- a bundled sample project input for repeatable demos
+
+The main remaining technical debt is app modularity. `app.py` still carries too much responsibility relative to a gold-standard app architecture.
 
 ## Related repositories
 
