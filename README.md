@@ -18,6 +18,10 @@ Use this repository when you want to:
 
 This repository is best understood as a **working application**, not just a framework or document set.
 
+## Maturity
+
+This is a **working app and analytics prototype**. It is useful for structured problem-solving demos, Lean Six Sigma practice, PM/quality workflows, and internal process-improvement exploration. It is not a substitute for certified Black Belt review, validated statistical software, production quality systems, or domain-expert decision-making.
+
 ## What you get
 
 ### 1. Project Wizard
@@ -113,12 +117,44 @@ examples/               # Example projects and outputs
 tests/                  # Smoke tests for documented fallback path
 ```
 
+## Architecture roadmap
+
+The app already works, but the next quality step is to make the architecture easier to maintain and review.
+
+Target direction:
+
+```text
+app.py                         # Thin Streamlit entry point
+ui/
+  theme.py                     # Styling and visual constants
+  layout.py                    # Shared page layout
+  pages/
+    project_wizard.py          # Project-input and package-generation flow
+    analytics_workbench.py     # Statistical tool views
+    export_center.py           # Export controls and previews
+services/
+  assessment_service.py        # Business logic orchestration
+  export_service.py            # PDF, DOCX, XLSX, HTML, Markdown export logic
+analytics/
+  capability.py
+  msa.py
+  hypothesis_testing.py
+  spc.py
+  fmea.py
+  regression.py
+  doe.py
+  benefits.py
+```
+
+This would make `app.py` smaller, reduce coupling between UI and logic, and make the analytics tools easier to test independently.
+
 ## Design principles
 
 - **evidence discipline** so users can separate facts from hypotheses
 - **graceful degradation** so the app still works without an API key
 - **role-aware framing** so the same work can be expressed for different audiences
 - **quantitative plus narrative** so the repo is useful for actual improvement work
+- **transparent technical debt** so limitations are named and improvements are trackable
 
 ## Current quality guardrails
 
@@ -128,7 +164,13 @@ The repository currently has:
 - smoke coverage for the documented CLI fallback path
 - a bundled sample project input for repeatable demos
 
-The main remaining technical debt is app modularity. `app.py` still carries too much responsibility relative to a gold-standard app architecture.
+The main remaining technical debt is app modularity. `app.py` still carries too much responsibility relative to a gold-standard app architecture. The architecture roadmap above documents the intended direction before deeper refactoring.
+
+## Scope and disclaimer
+
+This repository is shared in a personal capacity. It is not statistical certification, process certification, legal advice, compliance certification, or official Lean Six Sigma training material.
+
+AI-generated outputs should be treated as structured drafts and hypotheses. Validate assumptions, measurements, root causes, statistical interpretations, and improvement actions with real process data and qualified domain experts.
 
 ## Related repositories
 
