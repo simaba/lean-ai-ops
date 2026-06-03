@@ -7,41 +7,59 @@
 
 **Lean AI Ops is a local AI-powered Lean Six Sigma assistant for turning messy process problems into structured improvement plans, metrics, action trackers, and exportable project packages.**
 
-It is designed for people who need to improve a process but do not want to start from a blank page.
+It helps teams move from an unclear operational problem to a structured first draft of what to measure, what may be causing the issue, what actions to take, who should own them, and how to keep the improvement under control.
 
-You describe the problem in plain language. The app helps organize it into a practical Lean Six Sigma package using DMAIC, root-cause analysis, process-waste thinking, control planning, and quantitative analysis tools.
+The project combines two layers:
+
+1. an AI-assisted Project Wizard for Lean Six Sigma problem structuring
+2. an Analytics Workbench for quantitative process-improvement analysis
 
 ---
 
-## Plain-English summary
+## Overview
 
-Lean AI Ops helps answer questions like:
+Lean AI Ops helps teams answer practical improvement questions:
 
 - What exactly is the process problem?
 - What should we measure?
 - What are the likely root causes?
 - Which actions should we try first?
 - Who should own each action?
-- How do we know if the improvement worked?
-- How do we explain this clearly to a manager, PM, engineer, quality lead, or executive?
+- How do we know whether the improvement worked?
+- How do we explain the work clearly to a PM, manager, engineer, quality lead, or executive?
 
-The goal is not to replace a Lean Six Sigma expert. The goal is to give teams a structured first draft, a measurement starting point, and a better way to discuss process improvement.
+The goal is not to replace a Lean Six Sigma expert. The goal is to give teams a structured, reviewable starting point so discussions are clearer, evidence gaps are visible, and improvement work does not begin from a blank page.
+
+---
+
+## Why this project matters
+
+Many process-improvement efforts fail early because the problem is vague, the data is incomplete, root causes are assumed too quickly, or action ownership is unclear.
+
+Lean AI Ops supports a more disciplined improvement flow:
+
+1. clarify the problem
+2. separate facts from hypotheses
+3. identify missing evidence
+4. propose practical actions
+5. define metrics and control points
+6. create an exportable project package for review
+
+The value is not just faster documentation. The value is better thinking, clearer ownership, and more consistent improvement discipline.
 
 ---
 
 ## Who this is for
 
-This repo is useful for:
-
 | User | How it helps |
 |---|---|
 | Program managers | Turns vague delivery problems into structured actions, owners, risks, and metrics |
-| Project managers | Creates clear improvement plans, summaries, and trackers |
+| Project managers | Creates improvement plans, summaries, and trackers |
 | Quality teams | Frames problems using CTQs, DMAIC, root-cause logic, and control plans |
 | Operations teams | Identifies waste, bottlenecks, rework, and review cadence needs |
-| Engineering teams | Helps translate process pain into measurable workflow improvements |
+| Engineering teams | Translates process pain into measurable workflow improvements |
 | Executives | Produces concise summaries focused on impact, risk, and decisions needed |
-| Learners | Demonstrates how Lean Six Sigma methods can be applied to real process problems |
+| Learners | Demonstrates how Lean Six Sigma methods connect to real operational problems |
 
 ---
 
@@ -49,7 +67,7 @@ This repo is useful for:
 
 ### 1. Project Wizard
 
-The Project Wizard takes a plain-language problem description and generates a structured improvement package.
+The Project Wizard takes a short project description and generates a structured improvement package.
 
 Example input:
 
@@ -62,29 +80,29 @@ Example outputs:
 | Output | Meaning |
 |---|---|
 | Cleaned problem statement | A clearer, more measurable version of the problem |
-| CTQs | Critical-to-Quality needs, meaning what customers or stakeholders actually care about |
-| SIPOC | A simple map of Suppliers, Inputs, Process, Outputs, and Customers |
+| CTQs | Critical-to-Quality needs, meaning what customers or stakeholders care about |
+| SIPOC | A map of Suppliers, Inputs, Process, Outputs, and Customers |
 | DMAIC structure | Define, Measure, Analyze, Improve, and Control plan |
-| Root-cause hypotheses | Possible causes using structured reasoning, not random brainstorming |
+| Root-cause hypotheses | Possible causes generated through structured reasoning |
 | Suggested metrics | What to track to understand and improve the process |
 | Improvement actions | Specific actions with likely impact |
-| Control plan | How to keep the improvement from fading after the first fix |
+| Control plan | How to sustain the improvement after the first fix |
 | Action tracker | Actions, owners, priorities, and status |
 | Role-aware summary | A summary adapted for PMs, managers, engineers, quality leads, or executives |
 
-Every generated item is tagged as:
+Each generated item is tagged as:
 
-- **supported**: grounded in the input you provided
+- **supported**: grounded in the input provided
 - **inferred**: a reasonable hypothesis that still needs validation
 - **missing**: an evidence gap that should be investigated
 
-This evidence labeling is one of the most important parts of the app. It helps prevent AI output from sounding more certain than it really is.
+These evidence labels are important because they make the output easier to review. They help separate what is known, what is assumed, and what still needs evidence.
 
 ---
 
 ### 2. Analytics Workbench
 
-The Analytics Workbench gives you quantitative tools commonly used in process improvement and quality work.
+The Analytics Workbench provides quantitative tools commonly used in process improvement and quality work.
 
 | Tool area | What it helps with |
 |---|---|
@@ -97,11 +115,11 @@ The Analytics Workbench gives you quantitative tools commonly used in process im
 | DOE | Select an experimental-design approach for testing factors systematically |
 | Benefits & COPQ | Estimate cost of poor quality, ROI, payback, NPV, and benefit timing |
 
-These tools are meant to support analysis, not to replace statistical judgment. Outputs should be checked by someone who understands the process and the data.
+These tools support analysis, but they do not replace statistical judgment. Results should be reviewed by someone who understands the process and the data.
 
 ---
 
-### 3. Exports
+### 3. Exportable project packages
 
 Lean AI Ops can export project packages in multiple formats:
 
@@ -115,26 +133,9 @@ This makes the output easier to share in review meetings, project updates, quali
 
 ---
 
-## Why this project matters
-
-Many process-improvement efforts fail before they start because the problem is vague, the data is incomplete, the root causes are assumed too early, or the action plan is not owned by anyone.
-
-Lean AI Ops tries to make the first step easier and more disciplined:
-
-1. structure the problem
-2. separate facts from hypotheses
-3. identify what evidence is missing
-4. propose practical actions
-5. define metrics and control points
-6. generate a reviewable project package
-
-The benefit is not just faster documentation. The benefit is better thinking, clearer ownership, and more consistent improvement discipline.
-
----
-
 ## How it works
 
-Lean AI Ops has two operating modes:
+Lean AI Ops has two operating modes.
 
 ### With an Anthropic API key
 
@@ -142,18 +143,20 @@ The app can use an Anthropic model to generate richer Lean Six Sigma analysis fr
 
 ### Without an API key
 
-The app still works in deterministic fallback mode. This means you can run the demo and generate structured outputs even without any paid API key.
+The app still works in deterministic fallback mode. This means you can run the demo and generate structured outputs even without a paid API key.
 
-That fallback path is important because it makes the repo easier to test, demo, and evaluate.
+That fallback path makes the repo easier to test, demo, and evaluate.
 
 ---
 
-## Quick start for non-GitHub users
+## Beginner setup guide
 
-You do not need to understand GitHub deeply to try the app. At a high level:
+Use this section if you want to try the app locally.
 
-1. Download or clone this repository.
-2. Install Python 3.10 or newer.
+At a high level:
+
+1. Install Python 3.10 or newer.
+2. Download or clone this repository.
 3. Open a terminal in the project folder.
 4. Install the required packages.
 5. Run the Streamlit app.
@@ -179,7 +182,7 @@ When Streamlit starts, it will show a local URL such as `http://localhost:8501`.
 
 ---
 
-## Run the CLI demo
+## CLI demo
 
 The repository includes a sample project input file at `templates/sample_project.json`.
 
@@ -191,7 +194,7 @@ python run_demo.py --input templates/sample_project.json --mode dmaic --audience
 
 This prints a structured Markdown improvement package in the terminal.
 
-You can also try different modes:
+Try different modes:
 
 ```bash
 python run_demo.py --input templates/sample_project.json --mode root_cause --audience quality_lead
@@ -222,6 +225,16 @@ python run_demo.py --input templates/sample_project.json --mode control_plan --a
 | Manager | Accountability, top actions, cadence, and unblockers |
 | Quality Lead | CTQs, measurement integrity, evidence gaps, and control rigor |
 | Executive | Business impact, risk, decision needed, and expected outcome |
+
+---
+
+## Example use cases
+
+- A project manager needs to turn recurring escalation issues into a structured action plan.
+- A quality lead wants to frame a process problem before a DMAIC workshop.
+- A manager wants a clearer review cadence and control plan after a process fix.
+- An engineering team wants to identify where delays and rework are happening.
+- A student or practitioner wants to learn how Lean Six Sigma tools connect to real operational problems.
 
 ---
 
@@ -301,16 +314,6 @@ analytics/
   doe.py
   benefits.py
 ```
-
----
-
-## Example use cases
-
-- A project manager needs to turn recurring escalation issues into a structured action plan.
-- A quality lead wants to frame a process problem before a DMAIC workshop.
-- A manager wants a clearer review cadence and control plan after a process fix.
-- An engineering team wants to identify where delays and rework are happening.
-- A student or practitioner wants to learn how Lean Six Sigma tools connect to real operational problems.
 
 ---
 
