@@ -42,6 +42,3 @@ class AssessmentResult:
     action_tracker: List[Dict[str, str]]
     project_memory: Dict[str, List[str]]
     role_summary: str
-    generation_mode: str = "deterministic_fallback"
-    model_name: str | None = None
-    fallback_reason: str | None = None
