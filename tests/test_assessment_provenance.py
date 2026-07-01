@@ -27,6 +27,7 @@ def test_missing_api_key_is_disclosed_as_deterministic_fallback(monkeypatch) -> 
     assert result.model_name is None
     assert result.fallback_reason
     assert "No ANTHROPIC_API_KEY" in result.fallback_reason
+    assert result.role_summary.startswith("Generation note: deterministic fallback.")
 
 
 def test_require_llm_fails_instead_of_silently_falling_back(monkeypatch) -> None:
