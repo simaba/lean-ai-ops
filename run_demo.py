@@ -15,6 +15,13 @@ def load_input(path: Path) -> ProjectInput:
     return ProjectInput(**data)
 
 
+def _provenance_line(result) -> str:
+    if result.generation_mode == "llm":
+        return f"Generation: live model ({result.model_name})"
+    reason = result.fallback_reason or "Deterministic fallback was used."
+    return f"Generation: deterministic fallback — {reason}"
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the Lean Six Sigma AI copilot demo.")
     parser.add_argument("--input", type=Path, required=True, help="Path to project input JSON")
@@ -48,6 +55,8 @@ def main() -> None:
     except AssessmentGenerationError as exc:
         parser.error(str(exc))
 
+    print(_provenance_line(result))
+    print()
     print(render_markdown_summary(result))
 
 
