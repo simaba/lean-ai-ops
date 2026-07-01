@@ -24,6 +24,14 @@ class AssessmentGenerationError(RuntimeError):
     """Raised when an LLM result is required but cannot be generated."""
 
 
+def _generation_note(mode: str, reason: str | None = None) -> str:
+    """Return a concise provenance note suitable for user-visible summaries."""
+    if mode == "llm":
+        return f"Generation note: live model output ({MODEL_NAME})."
+    suffix = reason or "Deterministic fallback was used."
+    return f"Generation note: deterministic fallback. {suffix}"
+
+
 def _fallback(
     project: ProjectInput,
     mode: str,
@@ -34,6 +42,7 @@ def _fallback(
     result = _deterministic_fallback(project, mode, audience)
     return replace(
         result,
+        role_summary=f"{_generation_note('deterministic_fallback', reason)}\n\n{result.role_summary}",
         generation_mode="deterministic_fallback",
         model_name=None,
         fallback_reason=reason,
@@ -102,7 +111,7 @@ def run_assessment_with_provenance(
             control_plan=_parse_items(data["control_plan"]),
             action_tracker=data["action_tracker"],
             project_memory=data["project_memory"],
-            role_summary=data["role_summary"],
+            role_summary=f"{_generation_note('llm')}\n\n{data['role_summary']}",
             generation_mode="llm",
             model_name=MODEL_NAME,
             fallback_reason=None,
