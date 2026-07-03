@@ -30,6 +30,20 @@ def test_missing_api_key_is_disclosed_as_deterministic_fallback(monkeypatch) -> 
     assert result.role_summary.startswith("Generation note: deterministic fallback.")
 
 
+def test_fallback_does_not_present_unvalidated_input_as_confirmed(monkeypatch) -> None:
+    monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
+
+    result = run_assessment(project(), mode="dmaic", audience="executive")
+
+    assert "confirmed performance gap" not in result.role_summary
+    assert "reported performance concern" in result.role_summary
+    assert "measurable performance gap" not in result.cleaned_problem_statement
+    assert "reported performance concern" in result.cleaned_problem_statement
+    assert result.dmaic_structure["define"][0].statement.startswith(
+        "Reported problem statement:"
+    )
+
+
 def test_require_llm_fails_instead_of_silently_falling_back(monkeypatch) -> None:
     monkeypatch.delenv("ANTHROPIC_API_KEY", raising=False)
 
