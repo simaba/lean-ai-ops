@@ -32,6 +32,31 @@ def _generation_note(mode: str, reason: str | None = None) -> str:
     return f"Generation note: deterministic fallback. {suffix}"
 
 
+def _soften_fallback_certainty(result: AssessmentResult) -> AssessmentResult:
+    """Keep deterministic starter output from overstating unvalidated inputs."""
+    define_items = [
+        replace(
+            item,
+            statement=item.statement.replace(
+                "Problem confirmed:", "Reported problem statement:"
+            ),
+        )
+        for item in result.dmaic_structure.get("define", [])
+    ]
+    dmaic_structure = {**result.dmaic_structure, "define": define_items}
+    return replace(
+        result,
+        cleaned_problem_statement=result.cleaned_problem_statement.replace(
+            "has a measurable performance gap:",
+            "has a reported performance concern:",
+        ),
+        role_summary=result.role_summary.replace(
+            "has a confirmed performance gap", "has a reported performance concern"
+        ),
+        dmaic_structure=dmaic_structure,
+    )
+
+
 def _fallback(
     project: ProjectInput,
     mode: str,
@@ -39,7 +64,7 @@ def _fallback(
     reason: str,
 ) -> AssessmentResult:
     """Return a deterministic result that records why it was used."""
-    result = _deterministic_fallback(project, mode, audience)
+    result = _soften_fallback_certainty(_deterministic_fallback(project, mode, audience))
     return replace(
         result,
         role_summary=f"{_generation_note('deterministic_fallback', reason)}\n\n{result.role_summary}",
