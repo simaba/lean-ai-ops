@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "project": {
+    "name": "Lean AI Ops",
+    "tagline": "AI-assisted continuous improvement",
+    "repository": "simaba/lean-ai-ops",
+    "runtime": "Python + Streamlit",
+    "public_interface": "GitHub Pages",
+    "license": "MIT"
+  },
+  "capabilities": [
+    "Project Wizard",
+    "Analytics Workbench",
+    "Tool Recommender",
+    "DMAIC Tollgates",
+    "Evidence Discipline",
+    "Saved Projects",
+    "Multi-format Export"
+  ],
+  "journeys": {
+    "project": ["Intake", "Configure", "Generate", "Dashboard", "Export"],
+    "dmaic": ["Define", "Measure", "Analyze", "Improve", "Control"]
+  },
+  "analytics": [
+    "Process Capability",
+    "MSA / Gauge R&R",
+    "Hypothesis Testing",
+    "SPC",
+    "FMEA",
+    "Regression",
+    "DOE",
+    "Benefits & COPQ"
+  ],
+  "evidence_states": ["supported", "inferred", "missing"],
+  "exports": ["pdf", "docx", "xlsx", "html", "markdown"],
+  "interfaces": {
+    "working_app": "Streamlit",
+    "public_site": "Static GitHub Pages",
+    "browser_demo": "Deterministic client-side explainer"
+  }
+}

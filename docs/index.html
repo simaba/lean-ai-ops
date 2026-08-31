@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Lean AI Ops turns messy process problems into structured, evidence-aware Lean Six Sigma improvement work.">
+  <meta name="theme-color" content="#09111f">
+  <title>Lean AI Ops · AI-assisted continuous improvement</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <a class="brand" href="#home"><span class="logo">L</span><span>Lean AI Ops</span></a>
+  <nav aria-label="Main navigation">
+    <a href="#workspace">Workspace</a><a href="#demo">Demo</a><a href="#tools">Tools</a><a href="#architecture">Architecture</a><a href="#learn">Learn</a>
+  </nav>
+  <div class="top-actions"><button id="theme-toggle" class="icon-btn" aria-label="Switch theme">◐</button><a class="btn ghost small" href="https://github.com/simaba/lean-ai-ops">GitHub</a></div>
+</header>
+
+<main id="main">
+<section class="hero wrap" id="home">
+  <div class="hero-copy">
+    <p class="eyebrow">AI-assisted continuous improvement</p>
+    <h1>Turn process friction into a reviewable improvement system.</h1>
+    <p class="lede">Lean AI Ops helps teams structure unclear operational problems, separate evidence from assumptions, choose the right analysis tools, and carry improvement work through DMAIC.</p>
+    <div class="actions"><a class="btn primary" href="#workspace">Explore a project</a><a class="btn ghost" href="#architecture">See how it works</a></div>
+    <div class="facts"><span><b>5</b> DMAIC phases</span><span><b>8</b> analytics areas</span><span><b>3</b> evidence states</span><span><b>5</b> export formats</span></div>
+  </div>
+  <div class="hero-card">
+    <div class="card-head"><div><small>PROJECT</small><strong>Supplier Change Request Intake</strong></div><span class="pill">Sample</span></div>
+    <div class="rail" aria-label="DMAIC sample progress">
+      <div class="phase done"><b>D</b><small>Define</small></div><i class="done"></i>
+      <div class="phase done"><b>M</b><small>Measure</small></div><i class="done"></i>
+      <div class="phase active"><b>A</b><small>Analyze</small></div><i></i>
+      <div class="phase"><b>I</b><small>Improve</small></div><i></i>
+      <div class="phase"><b>C</b><small>Control</small></div>
+    </div>
+    <div class="metrics"><article><small>Cycle time</small><strong>18 days</strong><span>baseline</span></article><article><small>Rework</small><strong>27%</strong><span>requests</span></article><article><small>Escalations</small><strong>6/mo</strong><span>current state</span></article></div>
+    <div class="evidence"><span><i class="sup"></i><b>Supported</b><strong>18</strong></span><span><i class="inf"></i><b>Inferred</b><strong>6</strong></span><span><i class="mis"></i><b>Missing</b><strong>4</strong></span></div>
+  </div>
+</section>
+
+<section class="band" id="workspace">
+<div class="wrap">
+  <div class="section-head"><div><p class="eyebrow">Project workspace</p><h2>Follow the work, phase by phase.</h2></div><p>This sample is a client-side explainer based on the repository's deterministic example. It does not call an AI service or send your input anywhere.</p></div>
+  <div class="workspace">
+    <aside class="phase-nav">
+      <small>DMAIC</small>
+      <button class="selected" data-phase="define">01 <b>Define</b></button>
+      <button data-phase="measure">02 <b>Measure</b></button>
+      <button data-phase="analyze">03 <b>Analyze</b></button>
+      <button data-phase="improve">04 <b>Improve</b></button>
+      <button data-phase="control">05 <b>Control</b></button>
+      <div class="progress-copy"><span>Sample maturity</span><b id="progress-label">24%</b></div><div class="progress"><i id="progress-bar"></i></div>
+    </aside>
+    <div class="workspace-main">
+      <div class="workspace-title"><div><small>CURRENT VIEW</small><h3 id="phase-title">Define the problem precisely</h3></div><span id="phase-badge" class="badge">DEFINE</span></div>
+      <div class="two-col">
+        <article class="panel main-panel"><div class="panel-head"><div><small id="phase-kicker">Problem framing</small><h4 id="phase-primary-title">What is happening?</h4></div><span id="phase-evidence" class="tag supported">Supported</span></div><p id="phase-primary-copy"></p><div id="phase-signals" class="signals"></div></article>
+        <article class="panel next"><small>RECOMMENDED NEXT STEP</small><h4 id="phase-next-title"></h4><p id="phase-next-copy"></p><div class="why"><b>WHY</b><p id="phase-why"></p></div></article>
+      </div>
+      <div class="two-col lower">
+        <article class="panel"><div class="panel-head compact"><h4>Evidence health</h4><small id="evidence-caption">Define view</small></div><div id="evidence-bars"></div></article>
+        <article class="panel"><div class="panel-head compact"><h4>Deliverables</h4><small>phase outputs</small></div><ul id="phase-deliverables" class="deliverables"></ul></article>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section class="wrap" id="demo">
+  <div class="section-head"><div><p class="eyebrow">Browser-only demo</p><h2>Frame a process problem without sharing data.</h2></div><p>This helper creates a transparent starter brief in your browser. Full assessment generation remains in the Python application.</p></div>
+  <div class="demo-grid">
+    <form class="panel form" id="intake-form">
+      <label for="problem-input">Describe the process problem</label>
+      <textarea id="problem-input" maxlength="1200" rows="8" placeholder="Example: Supplier change requests take too long to move from intake to decision. Ownership is unclear and requests often need rework."></textarea>
+      <div class="input-meta"><span id="char-count">0 / 1200</span><button type="button" id="load-sample">Load sample</button></div>
+      <div class="form-row"><label>Primary concern<select id="concern-input"><option value="cycle-time">Cycle time / delay</option><option value="quality">Quality / defects</option><option value="variation">Variation / stability</option><option value="cost">Cost / waste</option><option value="measurement">Measurement confidence</option></select></label><label>Audience<select id="audience-input"><option value="pm">Program / project manager</option><option value="quality">Quality lead</option><option value="engineer">Engineer</option><option value="manager">Manager</option><option value="executive">Executive</option></select></label></div>
+      <button class="btn primary full" type="submit">Create starter brief</button>
+      <p class="privacy">Runs entirely in this page. No network request is made.</p>
+    </form>
+    <article class="panel brief" aria-live="polite">
+      <div class="panel-head compact"><div><small>STARTER BRIEF</small><h4 id="brief-title">Add a process problem to begin</h4></div><span class="pill subtle">Deterministic</span></div>
+      <div class="brief-block"><small>WORKING PROBLEM STATEMENT</small><p id="brief-problem">Your description will be normalized here without inventing facts.</p></div>
+      <div class="brief-block"><small>SUGGESTED FIRST MEASURES</small><ul id="brief-measures"><li>Baseline recommendations appear here.</li></ul></div>
+      <div class="brief-block"><small>EVIDENCE GAPS TO RESOLVE</small><ul id="brief-gaps"><li>Evidence gaps appear here.</li></ul></div>
+      <div class="brief-block last"><small>BEST NEXT TOOL</small><h4 id="brief-tool">Select a concern</h4><p id="brief-tool-reason">Tool rationale appears here.</p></div>
+    </article>
+  </div>
+</section>
+
+<section class="band" id="tools">
+<div class="wrap">
+  <div class="section-head"><div><p class="eyebrow">Analytics workbench</p><h2>Start with the question, then choose the statistic.</h2></div><p>The repository includes capability, MSA, hypothesis testing, SPC, FMEA, regression, DOE, and benefits/COPQ.</p></div>
+  <div class="tool-explorer">
+    <div class="questions">
+      <button class="selected" data-tool="spc"><span>01</span><b>Is the process stable over time?</b></button>
+      <button data-tool="capability"><span>02</span><b>Can the process meet its target?</b></button>
+      <button data-tool="hypothesis"><span>03</span><b>Are groups meaningfully different?</b></button>
+      <button data-tool="regression"><span>04</span><b>Which variables relate to the outcome?</b></button>
+      <button data-tool="msa"><span>05</span><b>Can I trust the measurement system?</b></button>
+      <button data-tool="fmea"><span>06</span><b>Which risks should be addressed first?</b></button>
+    </div>
+    <article class="tool-detail">
+      <small id="tool-number">01 / STABILITY</small><h3 id="tool-name">SPC control chart</h3><p id="tool-description"></p>
+      <div class="chart" id="tool-chart" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <dl><div><dt>Use when</dt><dd id="tool-use"></dd></div><div><dt>Watch for</dt><dd id="tool-watch"></dd></div><div><dt>Repository area</dt><dd id="tool-path"></dd></div></dl>
+    </article>
+  </div>
+</div>
+</section>
+
+<section class="wrap" id="architecture">
+  <div class="section-head"><div><p class="eyebrow">System map</p><h2>A thin interface over explicit assessment and analysis layers.</h2></div><p>Select a component to inspect its responsibility. The map describes the current architecture and intended boundaries without hiding the prototype's limitations.</p></div>
+  <div class="arch-grid">
+    <div class="arch-map" aria-label="Lean AI Ops architecture">
+      <button class="node selected" data-node="intake">Project intake<small>forms · sample data</small></button><span>→</span>
+      <button class="node" data-node="engine">Assessment engine<small>orchestration · modes</small></button><span>→</span>
+      <div class="node-stack"><button class="node" data-node="evidence">Evidence discipline<small>supported · inferred · missing</small></button><button class="node" data-node="analytics">Analytics<small>SPC · MSA · capability · tests</small></button><button class="node" data-node="renderers">Renderers & exports<small>PDF · DOCX · XLSX · HTML · MD</small></button></div><span>→</span>
+      <button class="node" data-node="ui">User interfaces<small>Streamlit · public Pages</small></button>
+    </div>
+    <article class="panel arch-detail"><small id="arch-layer">INPUT LAYER</small><h3 id="arch-name">Project intake</h3><p id="arch-description"></p><div class="arch-meta"><div><small>RESPONSIBILITY</small><b id="arch-responsibility"></b></div><div><small>REPRESENTATIVE PATHS</small><code id="arch-paths"></code></div><div><small>BOUNDARY</small><b id="arch-boundary"></b></div></div><a href="https://github.com/simaba/lean-ai-ops/blob/main/docs/architecture.md">Read architecture notes →</a></article>
+  </div>
+</section>
+
+<section class="band" id="learn">
+<div class="wrap">
+  <div class="section-head"><div><p class="eyebrow">Learn & inspect</p><h2>Documentation that exposes the reasoning boundaries.</h2></div><p>Use the public interface for orientation, then move into the repository docs for detailed contracts and implementation.</p></div>
+  <div class="docs">
+    <a href="https://github.com/simaba/lean-ai-ops/blob/main/docs/assessment-architecture.md"><small>ARCHITECTURE</small><h3>Assessment boundaries</h3><p>How input, orchestration, modes, and output contracts fit together.</p></a>
+    <a href="https://github.com/simaba/lean-ai-ops/blob/main/docs/assessment-generation.md"><small>GENERATION</small><h3>Assessment flow</h3><p>How project information becomes a reviewable improvement package.</p></a>
+    <a href="https://github.com/simaba/lean-ai-ops/blob/main/docs/evidence-discipline.md"><small>EVIDENCE</small><h3>Fact vs. hypothesis</h3><p>How supported, inferred, and missing states prevent false certainty.</p></a>
+    <a href="https://github.com/simaba/lean-ai-ops/blob/main/docs/non-technical-ui-guide.md"><small>UX</small><h3>Non-technical usage</h3><p>How statistical and LSS concepts are translated for practical users.</p></a>
+  </div>
+</div>
+</section>
+
+<section class="wrap cta">
+  <div><p class="eyebrow">Run the full application</p><h2>Use the Python app for real assessments and analytics.</h2><p>The public site is an explainer and deterministic demo. Streamlit remains the runtime for generation, saved projects, statistical analysis, and exports.</p></div>
+  <div class="actions"><a class="btn primary" href="https://github.com/simaba/lean-ai-ops#beginner-setup-guide">Run locally</a><a class="btn ghost" href="https://github.com/simaba/lean-ai-ops">View source</a></div>
+</section>
+</main>
+
+<footer class="footer wrap"><div class="brand"><span class="logo small">L</span><span>Lean AI Ops</span></div><p>Open-source prototype for structured, evidence-aware process improvement.</p><a href="https://github.com/simaba/lean-ai-ops/blob/main/LICENSE">MIT License</a></footer>
+</body>
+</html>
