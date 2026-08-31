@@ -16,6 +16,27 @@ The project combines two layers:
 
 ---
 
+## Public interface
+
+Lean AI Ops now includes a static, product-style public interface designed for GitHub Pages:
+
+**https://simaba.github.io/lean-ai-ops/**
+
+The public interface provides:
+
+- an interactive DMAIC project walkthrough
+- evidence-health and phase deliverable views
+- a browser-only deterministic intake demo that makes no network request
+- a question-first analytics tool explorer
+- an interactive architecture map
+- links into the deeper repository documentation
+
+The GitHub Pages layer is intentionally separate from the working Python runtime. It does not execute the assessment engine, call Anthropic, persist projects, or run statistical calculations. Use the Streamlit application for those capabilities.
+
+The interface contract and reusable project manifest live in [docs/public-interface-contract.md](docs/public-interface-contract.md) and [docs/project-manifest.json](docs/project-manifest.json).
+
+---
+
 ## Overview
 
 Lean AI Ops helps teams answer practical improvement questions:
@@ -251,6 +272,7 @@ src/
 analytics/              Workbench tools for capability, SPC, MSA, FMEA, etc.
 storage/                Project persistence
 ui/                     UI components
+  theme.py              Shared Streamlit visual system
 templates/              Input templates including sample_project.json
 examples/               Example projects and outputs
 tests/                  Analytics and smoke tests
@@ -278,7 +300,7 @@ This is a working prototype, not a finished commercial product.
 
 Known limitations:
 
-- `app.py` still carries too much responsibility and should be modularized further.
+- `app.py` has begun modularization with the shared visual system extracted to `ui/theme.py`; page and service responsibilities should continue moving into focused modules.
 - Statistical outputs should be checked by a qualified person before real decisions.
 - AI-generated recommendations are structured drafts, not validated findings.
 - The tool does not know your organization’s real constraints unless you provide them.
