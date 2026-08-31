@@ -33,7 +33,10 @@ jobs:
         run: |
           python -m json.tool docs/project-manifest.json >/dev/null
           python -m json.tool docs/data/sample-project.json >/dev/null
-          python -m pytest tests/test_public_site.py -q
+          test -s docs/index.html
+          grep -q 'id="workspace"' docs/index.html
+          grep -q 'id="tools"' docs/index.html
+          grep -q 'id="architecture"' docs/index.html
           node --check docs/assets/app.js
 
   deploy:
